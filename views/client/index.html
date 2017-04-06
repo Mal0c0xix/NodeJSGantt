@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.2/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="https://rawgit.com/angular-ui-tree/angular-ui-tree/master/dist/angular-ui-tree.min.css">
+    <link rel="stylesheet" type="text/css" href="node_modules/angular-gantt/assets/angular-gantt.css">
+    <link rel="stylesheet" type="text/css" href="node_modules/angular-gantt/assets/angular-gantt-plugins.css">
+    <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.css" />
+    <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+    <script type='text/javascript' src="https://cdn.jsdelivr.net/momentjs/latest/moment-with-locales.min.js"></script>
+    <script type='text/javascript' src="https://cdn.jsdelivr.net/angular.moment/latest/angular-moment.min.js"></script>
+    <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/moment-range/1.0.7/moment-range.min.js"></script>
+    <script type='text/javascript' src="https://rawgit.com/JimLiu/angular-ui-tree/master/dist/angular-ui-tree.js"></script>
+    <script type='text/javascript' src="https://rawgit.com/ganarajpr/angular-dragdrop/master/draganddrop.js"></script>
+    <script type='text/javascript' src="https://rawgit.com/marcj/css-element-queries/master/src/ElementQueries.js"></script>
+    <script type='text/javascript' src="https://rawgit.com/marcj/css-element-queries/master/src/ResizeSensor.js"></script>
+    <script type='text/javascript' src="node_modules/angular-gantt/assets/angular-gantt.js"></script>
+    <script type='text/javascript' src="node_modules/angular-gantt/assets/angular-gantt-plugins.js"></script>
+    <script type='text/javascript' src="script.js"></script>
+</head>
+
+<body>
+    <div ng-app="plnkrGanttMaster" ng-controller="Ctrl">
+    
+        <div class="navbar navbar-default" role="navigation" bs-navbar>
+            <div class="navbar-header">
+                <a class="navbar-brand" href="http://www.angular-gantt.com">Web Avancee - Gantt </a>
+            </div>
+        </div>
+        
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a href="" bs-collapse-toggle>Gantt</a>
+                            </h4>
+                        </div>
+                        <div class="panel-body">
+                            <div gantt
+                                 data="data",
+                                 timespans="timespans",
+                                 current-date="options.currentDate",
+                                 current-date-value="options.currentDateValue", 
+                                 >
+                                <gantt-tree></gantt-tree>
+                                <gantt-table       
+                                    columns="options.columns"
+                                    headers="options.columnsHeaders"
+                                    formatters="options.columnsFormatters">
+                                </gantt-table>
+                                <gantt-groups 
+                                    enabled="options.groupDisplayMode === 'group'" 
+                                    display="options.groupDisplayMode">
+                                </gantt-groups>
+                                <gantt-tooltips></gantt-tooltips>
+                                <gantt-bounds></gantt-bounds>
+                                <gantt-progress></gantt-progress>
+                                <gantt-sortable></gantt-sortable>
+                                <gantt-movable></gantt-movable>
+                                <gantt-draw-task></gantt-draw-task>
+                                <gantt-overlap></gantt-overlap>
+                                <gantt-resize-sensor></gantt-resize-sensor>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</body>
+
+</html>
