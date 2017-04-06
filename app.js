@@ -6,7 +6,11 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var passport = require('passport');
+var app = express();
+var http = require('http').Server(app);
 var LocalStrategy = require('passport-local').Strategy;
+
+var port = process.env.PORT || '3000';
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/node-auth')
@@ -15,8 +19,6 @@ mongoose.connect('mongodb://localhost/node-auth')
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-
-var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -63,5 +65,9 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+http.listen(port, () => {
+  console.log("Serveur en écoute sur 127.0.0.1:", port);
+})
 
 module.exports = app;
