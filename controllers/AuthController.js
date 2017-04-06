@@ -9,6 +9,15 @@ userController.home = function(req, res) {
   res.render('index', { user : req.user });
 };
 
+// Restrict access to root page
+userController.projects = function(req, res) {
+  User.find(null, (err, users) =>{
+    if (err) { console.log(err); }
+    console.log(users);
+    res.render('projects', { user : req.user, userslist : users });  
+  });
+};
+
 // Go to registration page
 userController.register = function(req, res) {
   res.render('register');
@@ -35,7 +44,7 @@ userController.login = function(req, res) {
 // Post login
 userController.doLogin = function(req, res) {
   passport.authenticate('local')(req, res, function () {
-    res.redirect('/');
+    res.redirect('/projects');
   });
 };
 

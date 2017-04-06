@@ -20,4 +20,7 @@ router.post('/login', auth.doLogin);
 // route for logout action
 router.get('/logout', auth.logout);
 
+// route pour projects après login
+router.get('/projects', auth.projects);
+
 module.exports = router;
