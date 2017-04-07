@@ -1,14 +1,35 @@
 extends layout
-script(type='text/javascript' src='answers.js')
-  
+// importer un fichier js
+script(type='text/javascript' src='script/bootbox.min.js')
+//- Panel mixin
+mixin panel(heading, style)
+    - var style = (typeof style === 'undefined') ? "default" : style
+    div( class=["panel", "panel-" + style] )
+        .panel-heading= heading
+        .panel-body
+            block
+    
+.row
+  .col-md-4.col-sm-6.col-xs-12
+  .col-md-4.col-sm-6.col-xs-12
+  .col-md-4.col-sm-6.col-xs-12
+    
+    
 block content
   script.
     var something = () => {
       
     }
+    var displayInput = () => {
+      bootbox.prompt("This is the default prompt!", function(result){ console.log(result); });
+    }
   h1 Retrouver la liste des projets ou créer le votre 
   h2 Cliquez sur un projet pour avoir des informations et les rejoindres
   button.btn.btn-primary(onclick='something()') Nouveau projet
+  br
+  br
   if (userslist)
     each key in userslist   
-      p !{key.name} !{key.username} 
+        div.col-xs-12.col-sm-4
+            +panel(key.username ,"primary") We are a fairly small, flexible design studio that designs for print and web. We work flexibly with clients to fulfil their design needs. Whether you need to create a brand from scratch, including marketing materials and a beautiful and functional website or whether you are looking for a design refresh we are confident you will be pleased with the results.
+               a.btn.btn-success(onclick="displayInput()") Accès Gantt
