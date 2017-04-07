@@ -14,20 +14,20 @@ userController.home = function(req, res) {
 /******************** PROJECTS  ********************/
 // Accède à la page projects après connexion
 userController.projects = function(req, res) {
-  User.find(null, (err, users) =>{
+  Project.find(null, (err, projects) =>{
     if (err) { console.log(err); }
-    console.log(users);
-    res.render('projects', { user : req.user, userslist : users });  
+    console.log(projects);
+    res.render('projects', { user : req.user, projectslist : projects });  
   });
 };
 
 // Accède à la page projects après connexion
 userController.createProject = function(req, res) {
-  Project.register(new Project({ username : req.body.username, name: req.body.name }), req.body.password, function(err, user) {
+  Project.register(new Project({ titre : req.body.titre, chatID: req.body.chat, description : req.body.projectDescription,
+  gantt : req.body.ganttID, participants : req.body.participants, ressources : req.body.ressources}), function(err, user) {
     if (err) {
-      return res.render('register', { user : user });
+      return res.render('projects', err);
     }
-
   });
 };
 
