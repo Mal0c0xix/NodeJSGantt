@@ -1,4 +1,4 @@
-var app = angular.module('plnkrGanttMaster',
+var app = angular.module('ganttProject',
     ['gantt',
     'gantt.sortable',
     'gantt.movable',
@@ -11,18 +11,55 @@ var app = angular.module('plnkrGanttMaster',
     'gantt.groups',
     'gantt.resizeSensor',
     'gantt.overlap',
-    'gantt.dependencies'
-    ]);
+    'gantt.dependencies']);
 
-app.controller('Ctrl', ['$scope', function ($scope) {
+app.controller('Ctrl', ['$scope', '$log', 'GanttObjectModel', function ($scope, $log, ObjectModel) {
+
+    var objectModel;
+    var dataToRemove;
+
+   /* // Event handler
+    var logDataEvent = function(eventName) {
+        $log.info('[Event] ' + eventName);
+    };
+
+    // Event handler
+    var logTaskEvent = function(eventName, task) {
+        $log.info('[Event] ' + eventName + ': ' + task.model.name);
+    };
+
+    // Event handler
+    var logRowEvent = function(eventName, row) {
+        $log.info('[Event] ' + eventName + ': ' + row.model.name);
+    };
+
+    // Event handler
+    var logRowsFilterEvent = function(rows, filteredRows) {
+        $log.info('[Event] rows.on.filter: ' + filteredRows.length + '/' + rows.length + ' rows displayed.');
+    };
+
+    // Event handler
+    var logTasksFilterEvent = function(tasks, filteredTasks) {
+        $log.info('[Event] tasks.on.filter: ' + filteredTasks.length + '/' + tasks.length + ' tasks displayed.');
+    };*/
+
+    /*// Event utility function
+    var addEventName = function(eventName, func) {
+        return function(data) {
+            return func(eventName, data);
+        };
+    };*/
+
     $scope.options = {
-        currentDate: 'column', // La date actuel est affiché en colonne 
+
+        currentDate: 'column', // La date actuel est affiché en colonne
         currentDateValue: getDatetime, // Date actuel
       	columns: ['from', 'to'],
         columnsHeaders: {'from': 'De', 'to': 'A'},
-        daily: true, //Les tâches sont en jour 
-        draw: true, //Créer une tâche = true 
+        daily: true, //Les tâches sont en jour
+        draw: true, //Créer une tâche = true
         readOnly: false, //Ne rien pouvoir faire = True
+
         columnsFormatters: {
             'from': function(from) {
         		return from !== undefined ? from.format('lll') : undefined;
@@ -31,10 +68,12 @@ app.controller('Ctrl', ['$scope', function ($scope) {
                 return to !== undefined ? to.format('lll') : undefined;
             }
         },
+
         canDraw: function(event) {
             var isLeftMouseButton = event.button === 0 || event.button === 1;
             return $scope.options.draw && !$scope.options.readOnly && isLeftMouseButton;
         },
+
         drawTaskFactory: function() {
             return {
                 id: 'utils.randomUuid()',  // Unique id of the task.
@@ -42,7 +81,9 @@ app.controller('Ctrl', ['$scope', function ($scope) {
                 color: '#AA8833' // Color of the task in HEX format (Optional).
             };
         },
+
         groupDisplayMode: 'group',
+
         dateFrames: {
             'weekend': {
                 evaluator: function(date) {
@@ -51,6 +92,7 @@ app.controller('Ctrl', ['$scope', function ($scope) {
                 targets: ['weekend']
             }
         },
+
         timeFrames: {
             'day': {
                 start: moment('8:00', 'HH:mm'),
@@ -73,17 +115,36 @@ app.controller('Ctrl', ['$scope', function ($scope) {
                 classes: ['gantt-timeframe-holiday']
             }
         },
+
         timeFramesNonWorkingMode: 'visible',
+
         dependencies: {
             enabled: true,
             conflictChecker: true
+        },
+
+        api: function(api) {
+            
         }
-    }
-    
+    };
+
+    // Ajout d'une ligne (Row) 
+    $scope.addRow = function() {
+        var name = $scope.targetDataAddRowIndex;
+        var newRow = {name: name, tasks: [
+            {id:'1', name: '', color: '#F1C232', from: new Date(), to: new Date(),
+                progress: 10}
+            ]};
+        $scope.data.push(newRow);
+        console.log($scope.data);
+        $scope.targetDataAddRowIndex = "";
+    };
+
     var getDatetime = function() {
       return (new Date).toLocaleFormat("%A, %B %e, %Y");
     };
     
+
     $scope.data = [
         // Order is optional. If not specified it will be assigned automatically
         {name: 'Finalize concept', tasks: [
@@ -108,5 +169,5 @@ app.controller('Ctrl', ['$scope', function ($scope) {
         ]},
         {name: 'Workshop', tasks: []},
     ];
-    
+
 }]);
