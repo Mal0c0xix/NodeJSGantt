@@ -10,16 +10,19 @@ var app = angular.module('plnkrGanttMaster',
     'gantt.tree',
     'gantt.groups',
     'gantt.resizeSensor',
-    'gantt.overlap'
+    'gantt.overlap',
+    'gantt.dependencies'
     ]);
 
 app.controller('Ctrl', ['$scope', function ($scope) {
     $scope.options = {
-        currentDate: 'column',
-        currentDateValue: new Date(2017, 3, 6, 11, 20, 0),
-        readOnly: false,
+        currentDate: 'column', // La date actuel est affiché en colonne 
+        currentDateValue: getDatetime, // Date actuel
       	columns: ['from', 'to'],
         columnsHeaders: {'from': 'De', 'to': 'A'},
+        daily: true, //Les tâches sont en jour 
+        draw: true, //Créer une tâche = true 
+        readOnly: false, //Ne rien pouvoir faire = True
         columnsFormatters: {
             'from': function(from) {
         		return from !== undefined ? from.format('lll') : undefined;
@@ -28,14 +31,64 @@ app.controller('Ctrl', ['$scope', function ($scope) {
                 return to !== undefined ? to.format('lll') : undefined;
             }
         },
-        groupDisplayMode: 'group'
+        canDraw: function(event) {
+            var isLeftMouseButton = event.button === 0 || event.button === 1;
+            return $scope.options.draw && !$scope.options.readOnly && isLeftMouseButton;
+        },
+        drawTaskFactory: function() {
+            return {
+                id: 'utils.randomUuid()',  // Unique id of the task.
+                name: 'Drawn task', // Name shown on top of each task.
+                color: '#AA8833' // Color of the task in HEX format (Optional).
+            };
+        },
+        groupDisplayMode: 'group',
+        dateFrames: {
+            'weekend': {
+                evaluator: function(date) {
+                    return date.isoWeekday() === 6 || date.isoWeekday() === 7;
+                },
+                targets: ['weekend']
+            }
+        },
+        timeFrames: {
+            'day': {
+                start: moment('8:00', 'HH:mm'),
+                end: moment('20:00', 'HH:mm'),
+                working: true,
+                default: true
+            },
+            'noon': {
+                start: moment('12:00', 'HH:mm'),
+                end: moment('13:30', 'HH:mm'),
+                working: false,
+                default: true
+            },
+            'weekend': {
+                working: false
+            },
+            'holiday': {
+                working: false,
+                color: 'red',
+                classes: ['gantt-timeframe-holiday']
+            }
+        },
+        timeFramesNonWorkingMode: 'visible',
+        dependencies: {
+            enabled: true,
+            conflictChecker: true
+        }
     }
+    
+    var getDatetime = function() {
+      return (new Date).toLocaleFormat("%A, %B %e, %Y");
+    };
     
     $scope.data = [
         // Order is optional. If not specified it will be assigned automatically
         {name: 'Finalize concept', tasks: [
             {id:'1', name: 'Finalize concept', color: '#F1C232', from: new Date(2017, 3, 4, 8, 0, 0), to: new Date(2017, 3, 8, 18, 0, 0),
-                progress: 10, content:""}
+                progress: 10}
         ]},
         {name: 'Config', tasks: [
             {name: 'SW / DNS/ Backups', color: '#F1C232', from: new Date(2017, 3, 8, 12, 0, 0), to: new Date(2017, 3, 21, 18, 0, 0)}
@@ -53,6 +106,7 @@ app.controller('Ctrl', ['$scope', function ($scope) {
             {name: 'Demo3', color: '#9FC5F8', from: new Date(2017, 4, 5, 15, 0, 0), to: new Date(2017, 4, 10, 18, 0, 0)},
             {name: 'Demo4', color: '#9FC5F8', from: new Date(2017, 4, 11, 15, 0, 0), to: new Date(2017, 4, 15, 18, 0, 0)},
         ]},
+        {name: 'Workshop', tasks: []},
     ];
     
 }]);
