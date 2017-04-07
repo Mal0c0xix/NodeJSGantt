@@ -128,11 +128,11 @@ app.controller('Ctrl', ['$scope', '$log', 'GanttObjectModel', function ($scope, 
         }
     };
 
-    // Ajout d'une ligne (Row) 
+    // Ajout d'une ligne (Row)
     $scope.addRow = function() {
         var name = $scope.targetDataAddRowIndex;
         var newRow = {name: name, tasks: [
-            {id:'1', name: '', color: '#F1C232', from: new Date(), to: new Date(),
+            {id:'1', name: 'Finalize concept', color: '#F1C232', from: new Date(2017, 3, 4, 8, 0, 0), to: new Date(2017, 3, 8, 18, 0, 0),
                 progress: 10}
             ]};
         $scope.data.push(newRow);
