@@ -1,8 +1,14 @@
 extends layout
-
+script(type='text/javascript' src='answers.js')
+  
 block content
-  h1 Node.js, Express.js, Mongoose.js and Passport.js
-  p User Authentication Example
+  script.
+    var something = () => {
+      
+    }
+  h1 Retrouver la liste des projets ou créer le votre 
+  h2 Cliquez sur un projet pour avoir des informations et les rejoindres
+  button.btn.btn-primary(onclick='something()') Nouveau projet
   if (userslist)
     each key in userslist   
       p !{key.name} !{key.username} 

@@ -14,19 +14,19 @@ html
             span.icon-bar
             span.icon-bar
             span.icon-bar
-          a.navbar-brand(href='#') Node.js Auth
+          a.navbar-brand(href='#') MEAN Stack gantt
         div.collapse.navbar-collapse(id='bs-example-navbar-collapse-1')
           ul.nav.navbar-nav.navbar-right
             if (!user)
               li
-                a(href='/login') Login
+                a(href='/login') Connection
               li
-                a(href='/register') Register
+                a(href='/register') Inscription
             if (user)
               li
-                a Welcome #{user.name}
+                a Bienvenue #{user.name}
               li
-                a(href='/logout') Logout
+                a(href='/logout') Se déconnecter
 
     div.container
       div.content

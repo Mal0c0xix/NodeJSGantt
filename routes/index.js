@@ -2,25 +2,34 @@ var express = require('express');
 var router = express.Router();
 var auth = require("../controllers/AuthController.js");
 
-// restrict index for logged in user only
+// Fonction permettant de vérifier que l'utilisateur est connecté
+function loggedIn(req, res, next) {
+    if (req.user) {
+        next();
+    } else {
+        res.redirect('/');
+    }
+}
+
+// bloque le fichier index pour les non authentifiés
 router.get('/', auth.home);
 
-// route to register page
+// route vers register page
 router.get('/register', auth.register);
 
-// route for register action
+// route pour register action
 router.post('/register', auth.doRegister);
 
-// route to login page
+// route vers login page
 router.get('/login', auth.login);
 
-// route for login action
+// route pour login action
 router.post('/login', auth.doLogin);
 
-// route for logout action
+// route pour logout action
 router.get('/logout', auth.logout);
 
 // route pour projects après login
-router.get('/projects', auth.projects);
+router.get('/projects', loggedIn, auth.projects);
 
 module.exports = router;
