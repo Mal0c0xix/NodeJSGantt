@@ -32,4 +32,6 @@ router.get('/logout', auth.logout);
 // route pour projects après login
 router.get('/projects', loggedIn, auth.projects);
 
+router.post("/projects/create", loggedIn, auth.createProject);
+
 module.exports = router;
