@@ -15,6 +15,7 @@ mixin panel(heading, style)
     
 block content
   script.
+    'use strict';
     var jsonProject = { 
       titre : "Test Projet 1",
       chatID : 1234145437,
@@ -22,7 +23,7 @@ block content
       ganttID : 123456789,
       participants : [],
       ressources : []
-    }
+    };
     var createProject = () => {
     
       jsonProject.titre = prompt("Titre du gantt", "Veuillez choisir un nom de projet");
@@ -36,20 +37,17 @@ block content
       
       http.send(JSON.stringify(jsonProject));
       //location.reload();
-    }
+    };
     var goToProject = (project) => {
     
       console.log(project);
     
-      var http = new XMLHttpRequest();
-      http.open("POST", "projects/details", true);
+      //var http = new XMLHttpRequest();
+      //http.open("POST", "projects/details", true);
       //Send the proper header information along with the request
-      http.setRequestHeader("Content-type", "application/json");
-      http.send(JSON.stringify(project));
-    }
-    var displayInput = () => {
-      
-    }
+      //http.setRequestHeader("Content-type", "application/json");
+      //http.send(JSON.stringify(project));
+    };
   h1 Retrouver la liste des projets ou créer le votre 
   h2 Cliquez sur un projet pour avoir des informations et les rejoindre
   button.btn.btn-primary(onclick='createProject()') Nouveau projet
@@ -60,7 +58,7 @@ block content
         div.col-xs-12.col-sm-4
             +panel(key.titre ,"primary") 
               !{key.description}
-              a.btn.btn-success(onclick='goToProject()') Accès Gantt
+              a.btn.btn-success(onclick='goToProject(#{key})') Accès Gantt
               
 // importer un fichier js
 script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js")

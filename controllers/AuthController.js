@@ -1,21 +1,21 @@
 'use strict';
 
-var mongoose = require("mongoose");
-var passport = require("passport");
-var User = require("../models/User");
-var Project = require("../models/Project");
+const mongoose = require("mongoose");
+const passport = require("passport");
+const User = require("../models/User");
+const Project = require("../models/Project");
 
-var userController = {};
+const userController = {};
 
 /******************** HOME  ********************/
 // Restreint l'accès à la root page
-userController.home = function(req, res) {
+userController.home = (req, res) => {
   res.render('index', { user : req.user });
 };
 
 /******************** PROJECTS  ********************/
 // Accède à la page projects après connexion
-userController.projects = function(req, res) {
+userController.projects = (req, res) => {
   Project.find(null, (err, projects) =>{
     if (err) { console.log(err); }
     console.log(projects);
@@ -24,12 +24,12 @@ userController.projects = function(req, res) {
 };
 
 // Accède à la page projects après connexion
-userController.createProject = function(req, res) {
+userController.createProject = (req, res) => {
   console.log("Entrée create Project " + req.body);
   
   let project = new Project({ titre : req.body.titre, chatID: req.body.chat, description : req.body.description, gantt : req.body.ganttID});
   
-  project.save(function(err) {
+  project.save((err) => {
     if (err) {
       console.log(err);
     }
@@ -37,7 +37,7 @@ userController.createProject = function(req, res) {
 };
 
 // Accède à la page du détail d'un project
-userController.getProjectDetails = function(req, res) {
+userController.getProjectDetails = (req, res) => {
   console.log("Entrée fonction getprojectDetails");
   Project.findOne({ name : req.body.titre }, (err, projects) =>{
     if (err) { console.log(err); }
@@ -48,37 +48,37 @@ userController.getProjectDetails = function(req, res) {
 
 /******************** AUTHENTIFICATION  ********************/
 // Accès page enregistrer
-userController.register = function(req, res) {
+userController.register = (req, res) => {
   res.render('register');
 };
 
 // Création de compte
-userController.doRegister = function(req, res) {
-  User.register(new User({ username : req.body.username, name: req.body.name }), req.body.password, function(err, user) {
+userController.doRegister = (req, res) => {
+  User.register(new User({ username : req.body.username, name: req.body.name }), req.body.password, (err, user) => {
     if (err) {
       return res.render('register', { user : user });
     }
 
-    passport.authenticate('local')(req, res, function () {
+    passport.authenticate('local')(req, res, () => {
       res.redirect('/projects');
     });
   });
 };
 
 // Accès page login
-userController.login = function(req, res) {
+userController.login = (req, res) => {
   res.render('login');
 };
 
 // Connexion
-userController.doLogin = function(req, res) {
-  passport.authenticate('local')(req, res, function () {
+userController.doLogin = (req, res) => {
+  passport.authenticate('local')(req, res, () => {
     res.redirect('/projects');
   });
 };
 
 // Déconnexion
-userController.logout = function(req, res) {
+userController.logout = (req, res) => {
   req.logout();
   res.redirect('/');
 };
