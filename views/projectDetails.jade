@@ -1,0 +1,23 @@
+extends layout
+
+mixin panel(heading, style)
+    - var style = (typeof style === 'undefined') ? "default" : style
+    div( class=["panel", "panel-" + style] )
+        .panel-heading= heading
+        .panel-body
+            block
+            
+.row
+  .col-md-6.col-sm-6.col-xs-12
+  .col-md-6.col-sm-6.col-xs-12
+  
+div.col-md-6.col-sm-6.col-xs-12
+    +panel("Participants" ,"primary") 
+      !{project.userslist}
+div.col-md-6.col-sm-6.col-xs-12
+    +panel("Tâches en cours" ,"primary") 
+      !{project.currentTasks}
+div.col-md-6.col-sm-6.col-xs-12
+    +panel("Ressources" ,"primary") 
+      !{project.ressourceslist}
+      

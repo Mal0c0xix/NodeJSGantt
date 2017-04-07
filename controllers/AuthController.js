@@ -27,12 +27,20 @@ userController.projects = function(req, res) {
 userController.createProject = function(req, res) {
   console.log("Entrée create Project " + req.body);
   
-  let project = new Project({ titre : req.body.titre, chatID: req.body.chat, description : req.body.projectDescription, gantt : req.body.ganttID});
+  let project = new Project({ titre : req.body.titre, chatID: req.body.chat, description : req.body.description, gantt : req.body.ganttID});
   
   project.save(function(err) {
     if (err) {
       console.log(err);
     }
+  });
+};
+
+userController.getProjectDetails = function(req, res) {
+  Project.findOne({ name : req.name }, (err, projects) =>{
+    if (err) { console.log(err); }
+    console.log(projects);
+    res.render('projectDetails', { user : req.user, project : projects });  
   });
 };
 
