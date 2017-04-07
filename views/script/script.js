@@ -13,44 +13,10 @@ var app = angular.module('ganttProject',
     'gantt.overlap',
     'gantt.dependencies']);
 
-app.controller('Ctrl', ['$scope', '$log', 'GanttObjectModel', function ($scope, $log, ObjectModel) {
+app.controller('Ctrl', ['$scope', function ($scope) {
 
     var objectModel;
     var dataToRemove;
-
-    var socket = io.connect();
-    
-   /* // Event handler
-    var logDataEvent = function(eventName) {
-        $log.info('[Event] ' + eventName);
-    };
-
-    // Event handler
-    var logTaskEvent = function(eventName, task) {
-        $log.info('[Event] ' + eventName + ': ' + task.model.name);
-    };
-
-    // Event handler
-    var logRowEvent = function(eventName, row) {
-        $log.info('[Event] ' + eventName + ': ' + row.model.name);
-    };
-
-    // Event handler
-    var logRowsFilterEvent = function(rows, filteredRows) {
-        $log.info('[Event] rows.on.filter: ' + filteredRows.length + '/' + rows.length + ' rows displayed.');
-    };
-
-    // Event handler
-    var logTasksFilterEvent = function(tasks, filteredTasks) {
-        $log.info('[Event] tasks.on.filter: ' + filteredTasks.length + '/' + tasks.length + ' tasks displayed.');
-    };*/
-
-    /*// Event utility function
-    var addEventName = function(eventName, func) {
-        return function(data) {
-            return func(eventName, data);
-        };
-    };*/
 
     $scope.options = {
 
@@ -124,10 +90,6 @@ app.controller('Ctrl', ['$scope', '$log', 'GanttObjectModel', function ($scope, 
             enabled: true,
             conflictChecker: true
         },
-
-        api: function(api) {
-            
-        }
     };
 
     // Ajout d'une ligne (Row)
