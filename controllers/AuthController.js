@@ -1,3 +1,5 @@
+'use strict';
+
 var mongoose = require("mongoose");
 var passport = require("passport");
 var User = require("../models/User");
@@ -23,10 +25,13 @@ userController.projects = function(req, res) {
 
 // Accède à la page projects après connexion
 userController.createProject = function(req, res) {
-  Project.register(new Project({ titre : req.body.titre, chatID: req.body.chat, description : req.body.projectDescription,
-  gantt : req.body.ganttID, participants : req.body.participants, ressources : req.body.ressources}), function(err, user) {
+  console.log("Entrée create Project " + req.body);
+  
+  let project = new Project({ titre : req.body.titre, chatID: req.body.chat, description : req.body.projectDescription, gantt : req.body.ganttID});
+  
+  project.save(function(err) {
     if (err) {
-      return res.render('projects', err);
+      console.log(err);
     }
   });
 };
