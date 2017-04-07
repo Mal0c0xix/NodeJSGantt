@@ -18,6 +18,8 @@ app.controller('Ctrl', ['$scope', '$log', 'GanttObjectModel', function ($scope, 
     var objectModel;
     var dataToRemove;
 
+    var socket = io.connect();
+    
    /* // Event handler
     var logDataEvent = function(eventName) {
         $log.info('[Event] ' + eventName);
@@ -144,7 +146,6 @@ app.controller('Ctrl', ['$scope', '$log', 'GanttObjectModel', function ($scope, 
       return (new Date).toLocaleFormat("%A, %B %e, %Y");
     };
     
-
     $scope.data = [
         // Order is optional. If not specified it will be assigned automatically
         {name: 'Finalize concept', tasks: [
