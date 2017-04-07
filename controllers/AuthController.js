@@ -36,6 +36,7 @@ userController.createProject = function(req, res) {
   });
 };
 
+// Accède à la page du détail d'un project
 userController.getProjectDetails = function(req, res) {
   Project.findOne({ name : req.name }, (err, projects) =>{
     if (err) { console.log(err); }
