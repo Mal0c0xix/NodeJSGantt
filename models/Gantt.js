@@ -1,8 +1,9 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var passportLocalMongoose = require('passport-local-mongoose');
+'use strict';
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const passportLocalMongoose = require('passport-local-mongoose');
 
-var ProjetSchema = new Schema({
+const ProjetSchema = new Schema({
     numeroProjet : Number,
     gantt : String
 });

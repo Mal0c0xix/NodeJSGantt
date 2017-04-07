@@ -1,6 +1,7 @@
-var express = require('express');
-var router = express.Router();
-var auth = require("../controllers/AuthController.js");
+'use strict';
+const express = require('express');
+const router = express.Router();
+const auth = require("../controllers/AuthController.js");
 
 // Fonction permettant de vérifier que l'utilisateur est connecté
 function loggedIn(req, res, next) {
