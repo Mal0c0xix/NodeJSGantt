@@ -4,11 +4,28 @@ script(type='text/javascript' src='answers.js')
 block content
   script.
     var something = () => {
+    
+      var jsonProject = { 
+        titre : "Test Projet 1",
+        chatID : 1234145437,
+        projectDescription : "Projet de test",
+        ganttID : 123456789,
+        participants : [],
+        ressources : []
+      }
+    
+      var http = new XMLHttpRequest();
+      var url = "https://testgantt-ylios.c9users.io/projects/create";
+      http.open("POST", url, true);
       
+      //Send the proper header information along with the request
+      http.setRequestHeader("Content-type", "application/json");
+      
+      http.send(JSON.stringify(jsonProject));
     }
   h1 Retrouver la liste des projets ou créer le votre 
   h2 Cliquez sur un projet pour avoir des informations et les rejoindres
   button.btn.btn-primary(onclick='something()') Nouveau projet
-  if (userslist)
-    each key in userslist   
-      p !{key.name} !{key.username} 
+  if (projectslist)
+    each key in projectslist   
+      p !{key.titre} !{key.projectDescription} 
