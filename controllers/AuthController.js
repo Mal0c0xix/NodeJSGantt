@@ -38,7 +38,8 @@ userController.createProject = function(req, res) {
 
 // Accède à la page du détail d'un project
 userController.getProjectDetails = function(req, res) {
-  Project.findOne({ name : req.name }, (err, projects) =>{
+  console.log("Entrée fonction getprojectDetails");
+  Project.findOne({ name : req.body.titre }, (err, projects) =>{
     if (err) { console.log(err); }
     console.log(projects);
     res.render('projectDetails', { user : req.user, project : projects });  

@@ -34,6 +34,6 @@ router.get('/projects', loggedIn, auth.projects);
 
 router.post("/projects/create", loggedIn, auth.createProject);
 
-router.get("/projects/details", loggedIn, auth.getProjectDetails);
+router.post("/projects/details", loggedIn, auth.getProjectDetails);
 
 module.exports = router;
