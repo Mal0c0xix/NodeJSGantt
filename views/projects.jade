@@ -29,8 +29,7 @@ block content
       }
     
       var http = new XMLHttpRequest();
-      var url = "https://testgantt-ylios.c9users.io/projects/create";
-      http.open("POST", url, true);
+      http.open("POST", "projects/create", true);
       
       //Send the proper header information along with the request
       http.setRequestHeader("Content-type", "application/json");
@@ -45,11 +44,8 @@ block content
   button.btn.btn-primary(onclick='something()') Nouveau projet
   br
   br
-  if (userslist)
-    each key in userslist   
-        div.col-xs-12.col-sm-4
-            +panel(key.username ,"primary") We are a fairly small, flexible design studio that designs for print and web. We work flexibly with clients to fulfil their design needs. Whether you need to create a brand from scratch, including marketing materials and a beautiful and functional website or whether you are looking for a design refresh we are confident you will be pleased with the results.
-               a.btn.btn-success(onclick="displayInput()") Accès Gantt
   if (projectslist)
     each key in projectslist   
-      p !{key.titre} !{key.projectDescription} 
+        div.col-xs-12.col-sm-4
+            +panel(key.titre ,"primary") key.description
+               a.btn.btn-success(onclick="displayInput()") Accès Gantt
