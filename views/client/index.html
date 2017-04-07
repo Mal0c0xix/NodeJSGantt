@@ -4,7 +4,6 @@
 <head>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.2/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="../style.css">
     <link rel="stylesheet" type="text/css" href="https://rawgit.com/angular-ui-tree/angular-ui-tree/master/dist/angular-ui-tree.min.css">
     <link rel="stylesheet" type="text/css" href="../../node_modules/angular-gantt/assets/angular-gantt.css">
     <link rel="stylesheet" type="text/css" href="../../node_modules/angular-gantt/assets/angular-gantt-plugins.css">
@@ -23,7 +22,7 @@
 </head>
 
 <body>
-    <div ng-app="plnkrGanttMaster" ng-controller="Ctrl">
+    <div ng-app="ganttProject" ng-controller="Ctrl">
     
         <div class="navbar navbar-default" role="navigation" bs-navbar>
             <div class="navbar-header">
@@ -37,11 +36,38 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
+                                <a href="" bs-collapse-toggle>Options</a>
+                            </h4>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group text-center">
+                                <label class="control-label"><i class="fa fa-database"></i>Row</label><br>
+                                <div class="form-group">
+                                     <input type="number" ng-model="targetDataAddRowIndex" step="1" min="0" class="form-control" placeholder="Row Index"/>
+                                    <button class="btn btn-default" ng-click="add()">Ajouter</button>
+                                    <button class="btn btn-default" ng-click="updateRowIndex()">Modifier</button>
+                                    <button class="btn btn-default" ng-click="remove('0ed15850-c9b8-9a03-ff05-da853780c16c')">Supprimer</button>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group text-center">
+                                <label class="control-label"><i class="fa fa-database"></i>Add Overlapping Task</label><br>
+                                <div class="form-group">
+                                    <input type="text" ng-model="options.targetDataAddRowIndex" step="1" min="0" class="form-control" placeholder="Row Index"/>
+                                    <button class="btn btn-default" ng-click="addRow()">Add</button>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
                                 <a href="" bs-collapse-toggle>Gantt</a>
                             </h4>
                         </div>
                         <div class="panel-body">
-<div gantt
+                            <div gantt
                                  data="data"
                                  daily="options.daily"
                                  timespans="timespans"
@@ -51,7 +77,8 @@
                                  date-frames="options.dateFrames"                                       
                                  time-frames="options.timeFrames"
                                  date-frames="options.dateFrames"
-                                 time-frames-non-working-mode="options.timeFramesNonWorkingMode">
+                                 time-frames-non-working-mode="options.timeFramesNonWorkingMode"
+                                 api="registerApi">
                                 <gantt-tree></gantt-tree>
                                 <gantt-table       
                                     columns="options.columns"
@@ -68,9 +95,9 @@
                                 <gantt-sortable></gantt-sortable>
                                 <gantt-movable enabled="!options.readOnly"></gantt-movable>
                                 <gantt-draw-task
-                                 enabled="options.canDraw"
-                                 move-threshold="2"
-                                 task-factory="options.drawTaskFactory">
+                                    enabled="options.canDraw"
+                                    move-threshold="2"
+                                    task-factory="options.drawTaskFactory">
                                 </gantt-draw-task>
                                 <gantt-dependencies enabled="true"
                                     read-only="false"
