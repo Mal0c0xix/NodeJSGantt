@@ -1,6 +1,5 @@
 extends layout
-// importer un fichier js
-script(type='text/javascript' src='script/bootbox.min.js')
+
 //- Panel mixin
 mixin panel(heading, style)
     - var style = (typeof style === 'undefined') ? "default" : style
@@ -8,7 +7,6 @@ mixin panel(heading, style)
         .panel-heading= heading
         .panel-body
             block
-    
 .row
   .col-md-4.col-sm-6.col-xs-12
   .col-md-4.col-sm-6.col-xs-12
@@ -17,17 +15,20 @@ mixin panel(heading, style)
     
 block content
   script.
-    var something = () => {
+    'use strict';
+    var jsonProject = { 
+      titre : "Test Projet 1",
+      chatID : 1234145437,
+      description : "Projet de test",
+      ganttID : 123456789,
+      participants : [],
+      ressources : []
+    };
+    var createProject = () => {
     
-      var jsonProject = { 
-        titre : "Test Projet 1",
-        chatID : 1234145437,
-        projectDescription : "Projet de test",
-        ganttID : 123456789,
-        participants : [],
-        ressources : []
-      }
-    
+      jsonProject.titre = prompt("Titre du gantt", "Veuillez choisir un nom de projet");
+      jsonProject.description = prompt("Description du gantt", "Veuillez choisir une description de projet");
+      
       var http = new XMLHttpRequest();
       http.open("POST", "projects/create", true);
       
@@ -35,17 +36,29 @@ block content
       http.setRequestHeader("Content-type", "application/json");
       
       http.send(JSON.stringify(jsonProject));
-    }
-    var displayInput = () => {
-      bootbox.prompt("This is the default prompt!", function(result){ console.log(result); });
-    }
+      //location.reload();
+    };
+    var goToProject = (project) => {
+    
+      console.log(project);
+    
+      //var http = new XMLHttpRequest();
+      //http.open("POST", "projects/details", true);
+      //Send the proper header information along with the request
+      //http.setRequestHeader("Content-type", "application/json");
+      //http.send(JSON.stringify(project));
+    };
   h1 Retrouver la liste des projets ou créer le votre 
-  h2 Cliquez sur un projet pour avoir des informations et les rejoindres
-  button.btn.btn-primary(onclick='something()') Nouveau projet
+  h2 Cliquez sur un projet pour avoir des informations et les rejoindre
+  button.btn.btn-primary(onclick='createProject()') Nouveau projet
   br
   br
   if (projectslist)
     each key in projectslist   
         div.col-xs-12.col-sm-4
-            +panel(key.titre ,"primary") key.description
-               a.btn.btn-success(onclick="displayInput()") Accès Gantt
+            +panel(key.titre ,"primary") 
+              !{key.description}
+              a.btn.btn-success(onclick='goToProject(#{key})') Accès Gantt
+              
+// importer un fichier js
+script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js")

@@ -1,7 +1,8 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+'use strict';
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-var ProjetSchema = new Schema({
+const ProjetSchema = new Schema({
     titre : String,
     chatID : Number,
     participants : Array(100),
