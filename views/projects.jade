@@ -18,7 +18,7 @@ block content
     var jsonProject = { 
       titre : "Test Projet 1",
       chatID : 1234145437,
-      projectDescription : "Projet de test",
+      description : "Projet de test",
       ganttID : 123456789,
       participants : [],
       ressources : []
@@ -26,7 +26,7 @@ block content
     var createProject = () => {
     
       jsonProject.titre = prompt("Titre du gantt", "Veuillez choisir un nom de projet");
-      jsonProject.projectDescription = prompt("Description du gantt", "Veuillez choisir une description de projet");
+      jsonProject.description = prompt("Description du gantt", "Veuillez choisir une description de projet");
       
       var http = new XMLHttpRequest();
       http.open("POST", "projects/create", true);
@@ -37,15 +37,21 @@ block content
       http.send(JSON.stringify(jsonProject));
       //location.reload();
     }
-    var goToProject = () => {
+    var goToProject = (project) => {
+    
+      console.log(project);
+    
       var http = new XMLHttpRequest();
-      http.open("GET", "projects/details", true);
+      http.open("POST", "projects/details", true);
+      //Send the proper header information along with the request
+      http.setRequestHeader("Content-type", "application/json");
+      http.send(JSON.stringify(project));
     }
     var displayInput = () => {
       
     }
   h1 Retrouver la liste des projets ou créer le votre 
-  h2 Cliquez sur un projet pour avoir des informations et les rejoindres
+  h2 Cliquez sur un projet pour avoir des informations et les rejoindre
   button.btn.btn-primary(onclick='createProject()') Nouveau projet
   br
   br
@@ -54,7 +60,7 @@ block content
         div.col-xs-12.col-sm-4
             +panel(key.titre ,"primary") 
               !{key.description}
-              a.btn.btn-success(onclick="displayInput()") Accès Gantt
+              a.btn.btn-success(onclick='goToProject()') Accès Gantt
               
 // importer un fichier js
 script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js")
